@@ -1,21 +1,44 @@
 " Reminder: you can tell the current setting in vim with "set <commandname>?"
 
+" tabs
 set tabstop=4					" display \t as four spaces
 set softtabstop=4				" amount of equivalent space the tab key inserts
 set shiftwidth=4				" amount of equivalent space >> and << insert/remove
 set noexpandtab					" dont convert tabs to spaces
-" set number					" line numbers not shown
+
+" Set tab and indent settings for Python (PEP 8 Compliance)
+" This is same as defaults but good to have it explicit for python
+autocmd FileType python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+
+" appearance
+set number					    " line numbers not shown
 " set relativenumber			" show relative numbers
 " set ruler						" show ruler, not needed due to custom statusline
 set cursorline					" highlight current line
 " set visualbell				" turn off audible bell
+syntax on						" turn on syntax highlighting
+set showmatch					" show matching brackets, parens, etc.
+set colorcolumn=81				" red column to indicate where the 80 char mark is
+
+" autocomplete
 set wildmenu					" enable commandmode autocomplete menu (tab through results)
 set wildoptions=pum				" verticle autocomplete menu looks nicer
 set wildmode=longest:list,full	" mess with this if autocomplete isn't working how you want it to
 let mapleader = ","				" remap the <leader> key from \ for easier typing
+
+" search
 set incsearch					" search as characters are entered
 set hlsearch					" highlight matches
-syntax on						" turn on syntax highlighting
+set ignorecase					" case insensitive search by default
+
+" other
+set mouse=a						" enable mouse support in all modes
+
+" filetype stuff
+filetype on						" enable filetype detection
+filetype plugin on				" load detected filetypes plugin
+filetype indent on				" load detected filetypes automatic indenting
+
 
 " folding
 set foldenable          " enable folding (default setting)

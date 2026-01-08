@@ -4,3 +4,6 @@ alias ga="git add"
 alias gc="git commit"
 alias gl="git log"
 alias gp="git push"
+
+# tailscale command
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
