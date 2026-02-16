@@ -31,9 +31,6 @@ set incsearch					" search as characters are entered
 set hlsearch					" highlight matches
 set ignorecase					" case insensitive search by default
 
-" other
-set mouse=a						" enable mouse support in all modes
-
 " filetype stuff
 filetype on						" enable filetype detection
 filetype plugin on				" load detected filetypes plugin
