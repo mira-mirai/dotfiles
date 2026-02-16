@@ -1,3 +1,8 @@
+# common command aliases
+alias rm='rm -i'
+alias la=ls -la
+alias ll=ls -l
+
 # git aliases
 alias gs="git status" #this overrides ghostscript
 alias ga="git add"
