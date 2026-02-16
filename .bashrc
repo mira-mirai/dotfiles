@@ -1,4 +1,4 @@
-echo "loading .bashrc"
+echo "loading ~/.bashrc"
 
 # homebrew stuff
 export HOMEBREW_PREFIX="/opt/homebrew";
@@ -9,7 +9,9 @@ export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
 export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
 
 #lets keep aliases in their own file
-source .aliases
+echo "loading ~/.aliases"
+source ~/.aliases
 
 #other path updates
-source .path
+echo "loading ~/.path"
+source ~/.path
