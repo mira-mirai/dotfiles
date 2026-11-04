@@ -15,3 +15,4 @@ source ~/.aliases
 #other path updates
 echo "loading ~/.path"
 source ~/.path
+export PATH="$HOME/.local/bin:$PATH"

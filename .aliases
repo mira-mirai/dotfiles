@@ -12,3 +12,9 @@ alias gp="git push"
 
 # tailscale command
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+
+# take a big video (like a photobooth export) and make it smaller
+shrinkvid() {
+  ffmpeg -i "$1" -c:v libx265 -crf "${2:-28}" -preset slow -tag:v hvc1 \
+    -c:a aac -b:a 96k "${1%.*}_smaller.mov"
+}
