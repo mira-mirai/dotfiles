@@ -17,11 +17,19 @@ alias gc="git commit"
 alias gl="git log"
 alias gp="git push"
 
-# colored ls and grep output
+# colored ls output, the same on macOS and linux:
+#   folders: bold blue   symlinks: bold cyan   programs: bold green   sockets: bold magenta
+#   pipes: yellow        devices: bold yellow
+#   setuid: white on red   setgid: black on yellow   world-writable folders: green background
+# macOS (LSCOLORS) and linux (LS_COLORS) spell this differently, so both are written out.
+# linux's default extension colors (archives red, images magenta...) are left out on purpose,
+# since macOS's ls can't do them and red already means "removed/changed"
+export CLICOLOR=1
+export LSCOLORS='ExGxFxdxCxDxDxhbadacec'
+export LS_COLORS='di=01;34:ln=01;36:so=01;35:pi=33:ex=01;32:bd=01;33:cd=01;33:su=37;41:sg=30;43:tw=30;42:ow=34;42'
 case $OSTYPE in
-  darwin*) export CLICOLOR=1 ;;
-  *) [ -x /usr/bin/dircolors ] && eval "$(dircolors -b)"
-     alias ls='ls --color=auto' ;;
+  darwin*) ;;
+  *) alias ls='ls --color=auto' ;;
 esac
 alias grep='grep --color=auto'
 
