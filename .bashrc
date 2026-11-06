@@ -17,9 +17,11 @@ case $OSTYPE in
 esac
 
 # tab completion (git branches, ssh hosts, etc.) if bash-completion is installed.
-# on macOS's bash 3.2 only homebrew's older `bash-completion` package works, not `bash-completion@2`
+# homebrew's `bash-completion@2` needs bash 4.2+ (its loader checks); on macOS's bash 3.2
+# only the older `bash-completion` package works
 if [ -z "${BASH_COMPLETION_VERSINFO-}" ] && [ -z "${BASH_COMPLETION-}" ]; then
   for f in /usr/share/bash-completion/bash_completion /etc/bash_completion \
+           "${HOMEBREW_PREFIX:-/nonexistent}/etc/profile.d/bash_completion.sh" \
            "${HOMEBREW_PREFIX:-/nonexistent}/etc/bash_completion"; do
     if [ -r "$f" ]; then source "$f"; break; fi
   done
@@ -44,7 +46,8 @@ HISTSIZE=50000                # commands kept in memory
 HISTFILESIZE=100000           # commands kept in ~/.bash_history
 HISTCONTROL=ignoreboth        # skip repeated commands and ones starting with a space
 HISTTIMEFORMAT='%F %T  '      # show when each command ran in `history`
-shopt -s histappend           # add to the history file instead of overwriting it# save each command as soon as it runs, so a crash or a still-open tab doesn't lose it.
+shopt -s histappend           # add to the history file instead of overwriting it
+# save each command as soon as it runs, so a crash or a still-open tab doesn't lose it.
 # keeps any existing PROMPT_COMMAND (e.g. Terminal.app's current-folder tracking)
 case "${PROMPT_COMMAND-}" in
   *"history -a"*) ;;
@@ -60,6 +63,14 @@ fi
 
 # optional: let cd fix small typos (`cd Documnets` -> Documents). off for now
 # shopt -s cdspell
+
+# bash 4+ only (linux, and macOS with homebrew's bash). macOS's /bin/bash 3.2 skips these
+if [ "${BASH_VERSINFO[0]}" -ge 4 ]; then
+  # `**` matches any depth of folders: `ls **/*.md`
+  shopt -s globstar
+  # optional: type a folder name to cd into it. off for now
+  # shopt -s autocd
+fi
 
 # linux: let `less` open archives and other non-text files
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"

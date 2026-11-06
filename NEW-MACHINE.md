@@ -30,6 +30,14 @@ settings that need `sudo` and steps done once per machine.
 
 ## macOS
 
+- Switch to a current bash (macOS ships bash 3.2 from 2007; the servers run bash 5).
+  On Intel Macs use `/usr/local/bin/bash` instead of `/opt/homebrew/bin/bash`:
+  ```bash
+  brew install bash bash-completion@2
+  echo /opt/homebrew/bin/bash | sudo tee -a /etc/shells   # allow it as a login shell
+  chsh -s /opt/homebrew/bin/bash                          # make it yours
+  ```
+  New Terminal windows then start bash 5. Scripts starting with `#!/bin/bash` still use 3.2.
 - `setup.sh` imports the Gruvbox Dark Terminal profile and makes it the default.
   Windows that were already open keep their old look until closed.
 - `setup.sh` turns off Terminal's per-tab history. After closing the tabs that were open
