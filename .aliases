@@ -1,7 +1,14 @@
 # common command aliases
-alias rm='rm -i'
+alias rm='rm -i'        # ask before deleting
+alias cp='cp -i'        # ask before overwriting
+alias mv='mv -i'        # ask before overwriting
+alias mkdir='mkdir -p'  # create missing parent folders, no error if it exists
 alias la='ls -la'
 alias ll='ls -l'
+
+# moving up folders
+alias ..='cd ..'
+alias ...='cd ../..'
 
 # git aliases
 alias gs="git status" #this overrides ghostscript

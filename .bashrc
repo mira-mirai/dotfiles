@@ -51,6 +51,16 @@ case "${PROMPT_COMMAND-}" in
   *) PROMPT_COMMAND="history -a${PROMPT_COMMAND:+; $PROMPT_COMMAND}" ;;
 esac
 
+# editor for git commit, crontab -e, etc. (minimal servers may only have vi)
+if command -v vim >/dev/null; then
+  export EDITOR=vim VISUAL=vim
+else
+  export EDITOR=vi VISUAL=vi
+fi
+
+# optional: let cd fix small typos (`cd Documnets` -> Documents). off for now
+# shopt -s cdspell
+
 # linux: let `less` open archives and other non-text files
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
