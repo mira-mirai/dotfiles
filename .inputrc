@@ -1,0 +1,22 @@
+# ~/.inputrc: line editing for bash (and anything else using readline), on macOS and linux
+
+# keep the system's settings (on ubuntu/debian: home/end keys, etc.). harmless if missing
+$include /etc/inputrc
+
+# up/down arrows search history for what's already typed: type `git`, press up
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+"\eOA": history-search-backward
+"\eOB": history-search-forward
+
+# tab completion. (readline doesn't allow comments at the end of a line, so they go above)
+# `cd doc<Tab>` finds Documents
+set completion-ignore-case on
+# list all matches on the first Tab, not the second
+set show-all-if-ambiguous on
+# add / after symlinks to folders
+set mark-symlinked-directories on
+# color the completion list with the ls colors, and highlight the part already typed.
+# these need bash 4.3+ / readline 6.3+; macOS's bash 3.2 ignores them
+set colored-stats on
+set colored-completion-prefix on

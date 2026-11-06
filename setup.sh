@@ -6,7 +6,7 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # symlink each dotfile into ~, backing up any real file already there
-for f in .bashrc .bash_profile .aliases .path .vimrc .gitignore_global .gitconfig; do
+for f in .bashrc .bash_profile .aliases .path .vimrc .gitignore_global .gitconfig .inputrc; do
   target="$HOME/$f"
   if [ -L "$target" ] && [ "$(readlink "$target")" = "$SCRIPT_DIR/$f" ]; then
     echo "ok: $target already linked"
