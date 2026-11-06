@@ -68,7 +68,15 @@ fi
 echo "loading ~/.aliases"
 source ~/.aliases
 
-# prompt: blank line, then full path (blue) + git branch (yellow) + user@host (dim),
-# with commands typed on their own line below
+# prompt: blank line, then full path (blue) + git branch (yellow) + user@host,
+# with commands typed on their own line below.
+# user@host is dim on the machine in front of you and bold bright magenta over ssh,
+# so it's obvious when you're on a server
 __git_branch() { git symbolic-ref --short HEAD 2>/dev/null | sed 's/.*/ (&)/'; }
-PS1='\n\[\e[1;34m\]\w\[\e[0;33m\]$(__git_branch)\[\e[0m\]  \[\e[2m\]\u@\h\[\e[0m\]\n\$ '
+if [ -n "${SSH_CONNECTION-}" ]; then
+  __host='\[\e[1;95m\]\u@\h\[\e[0m\]'
+else
+  __host='\[\e[2m\]\u@\h\[\e[0m\]'
+fi
+PS1='\n\[\e[1;34m\]\w\[\e[0;33m\]$(__git_branch)\[\e[0m\]  '"$__host"'\n\$ '
+unset __host
