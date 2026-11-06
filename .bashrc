@@ -38,6 +38,19 @@ unset f
 # keep $LINES/$COLUMNS right after resizing the window
 shopt -s checkwinsize
 
+# history: one shared ~/.bash_history on every machine
+# (on macOS, setup.sh also turns off Terminal.app's separate per-tab histories)
+HISTSIZE=50000                # commands kept in memory
+HISTFILESIZE=100000           # commands kept in ~/.bash_history
+HISTCONTROL=ignoreboth        # skip repeated commands and ones starting with a space
+HISTTIMEFORMAT='%F %T  '      # show when each command ran in `history`
+shopt -s histappend           # add to the history file instead of overwriting it# save each command as soon as it runs, so a crash or a still-open tab doesn't lose it.
+# keeps any existing PROMPT_COMMAND (e.g. Terminal.app's current-folder tracking)
+case "${PROMPT_COMMAND-}" in
+  *"history -a"*) ;;
+  *) PROMPT_COMMAND="history -a${PROMPT_COMMAND:+; $PROMPT_COMMAND}" ;;
+esac
+
 # linux: let `less` open archives and other non-text files
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
