@@ -1,0 +1,14 @@
+[user]
+	name = mirai
+	email = mirahatesspam+git@proton.me
+[init]
+	defaultBranch = main
+[color]
+	ui = auto
+[pull]
+	rebase = false
+[core]
+	excludesfile = ~/.gitignore_global
+[include]
+	# per-machine overrides (e.g. a work email), not in the repo. skipped if missing
+	path = ~/.gitconfig.local
