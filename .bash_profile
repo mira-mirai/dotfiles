@@ -3,5 +3,5 @@
 # tell macos not to nag me about zsh
 export BASH_SILENCE_DEPRECATION_WARNING=1
 
-echo "loading ~/.bash_profile"
+[[ $- == *i* ]] && echo "loading ~/.bash_profile"
 source ~/.bashrc

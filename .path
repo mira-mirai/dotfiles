@@ -1,0 +1,53 @@
+# PATH setup shared by every machine (macOS and Linux).
+# Each entry is added only if its directory exists, so the same file works everywhere.
+# Entries for a single machine (work tools, etc.) go in ~/.path.local, which is not in the repo.
+
+# add a dir to PATH if it exists
+#   path_add DIR        append, skipped if already present
+#   path_add DIR front  move/put it at the front (wins over system dirs)
+path_add() {
+  [ -d "$1" ] || return 0
+  if [ "$2" = front ]; then
+    local p=":$PATH:"
+    p=${p//:$1:/:}; p=${p#:}; p=${p%:}
+    PATH="$1${p:+:$p}"
+  else
+    case ":$PATH:" in *":$1:"*) ;; *) PATH="${PATH:+$PATH:}$1" ;; esac
+  fi
+}
+
+# homebrew: apple silicon mac, intel mac, or linuxbrew (first one found wins)
+for prefix in /opt/homebrew /usr/local /home/linuxbrew/.linuxbrew "$HOME/.linuxbrew"; do
+  if [ -x "$prefix/bin/brew" ]; then
+    export HOMEBREW_PREFIX="$prefix"
+    export HOMEBREW_CELLAR="$prefix/Cellar"
+    if [ -d "$prefix/Homebrew" ]; then
+      export HOMEBREW_REPOSITORY="$prefix/Homebrew"
+    else
+      export HOMEBREW_REPOSITORY="$prefix"
+    fi
+    path_add "$prefix/sbin" front
+    path_add "$prefix/bin" front
+    [ -z "${MANPATH-}" ] || export MANPATH=":${MANPATH#:}"
+    case ":${INFOPATH-}:" in
+      *":$prefix/share/info:"*) ;;
+      *) export INFOPATH="$prefix/share/info:${INFOPATH-}" ;;
+    esac
+    break
+  fi
+done
+unset prefix
+
+# python user installs (pip install --user, e.g. beet)
+#   macOS: ~/Library/Python/<version>/bin   linux: ~/.local/bin (below)
+for d in "$HOME"/Library/Python/*/bin; do path_add "$d"; done
+unset d
+
+# personal bin dirs go first so they override everything else
+path_add "$HOME/.local/bin" front
+path_add "$HOME/bin" front
+
+# machine-specific additions
+[ -f "$HOME/.path.local" ] && source "$HOME/.path.local"
+
+export PATH

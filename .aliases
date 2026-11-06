@@ -10,8 +10,18 @@ alias gc="git commit"
 alias gl="git log"
 alias gp="git push"
 
-# tailscale command
-alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+# colored ls and grep output
+case $OSTYPE in
+  darwin*) export CLICOLOR=1 ;;
+  *) [ -x /usr/bin/dircolors ] && eval "$(dircolors -b)"
+     alias ls='ls --color=auto' ;;
+esac
+alias grep='grep --color=auto'
+
+# tailscale: on macOS the command lives inside the app, on linux it's a normal command
+if [[ $OSTYPE == darwin* ]] && [ -x /Applications/Tailscale.app/Contents/MacOS/Tailscale ]; then
+  alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+fi
 
 # take a big video (like a photobooth export) and make it smaller
 shrinkvid() {
